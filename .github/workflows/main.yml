@@ -26,4 +26,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: actions-demo
-          path: actions-demo*
+          path: target/action-demo
