@@ -1,8 +1,12 @@
-name: GraalVM Enterprise Edition build
+name: GraalVM Native Image Builds
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Simple Spring Boot Sample on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
@@ -21,9 +25,8 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build Project with Maven
         run: mvn -Pnative native:compile
-
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
-          name: actions-demo
-          path: target/actions-demo
+          name: actions-demo-${{ matrix.os }}
+          path: target/actions-demo*
