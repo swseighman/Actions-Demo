@@ -62,8 +62,6 @@
                     <buildArgs>
                         <!-- Quick build mode is enabled  -->
                         <buildArg>-Ob</buildArg>
-                        <!-- G1 is supported on Linux only, comment out next line if on another platform -->
-                        <buildArg>--gc=G1</buildArg>
                         <!-- Enable JFR support -->
                         <buildArg>--enable-monitoring=jfr</buildArg>
                         <!-- Show exception stack traces for exceptions during image building -->
