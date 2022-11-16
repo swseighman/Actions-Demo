@@ -3,7 +3,7 @@ FROM container-registry.oracle.com/os/oraclelinux:9-slim
 
 EXPOSE 8080
 
-COPY ./actions-demo app
+COPY actions-demo-linux app
 ENTRYPOINT ["/app"]
 
 # Build and run:

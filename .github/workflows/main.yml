@@ -40,11 +40,11 @@ jobs:
       - name: Build Native Image Using Maven
         run: mvn -Pnative native:compile
 
-      # - name: Upload binary
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: actions-demo-${{ matrix.os }}
-      #     path: target/actions-demo
+      - name: Upload binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: actions-demo-linux
+          path: target
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
@@ -53,10 +53,10 @@ jobs:
       
       - name: Debug downloads
         run: pwd; ls -lh
-        # working-directory: target
+        working-directory: target
 
       - name: Copy downloaded artifact to . for Dockerfile compatibility
-        run: cp ./target/actions-demo .
+        run: cp ./target/actions-demo-linux .
 
       # Define job to build and publish container image
    
