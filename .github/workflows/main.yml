@@ -40,11 +40,11 @@ jobs:
       - name: Build Native Image Using Maven
         run: mvn -Pnative native:compile
 
-      - name: Upload binary
-        uses: actions/upload-artifact@v3
-        with:
-          name: actions-demo-${{ matrix.os }}
-          path: target/actions-demo
+      # - name: Upload binary
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: actions-demo-${{ matrix.os }}
+      #     path: target/actions-demo
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
