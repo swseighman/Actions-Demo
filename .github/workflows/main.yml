@@ -43,7 +43,7 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
-          name: actions-demo-linux
+          name: actions-demo
           path: target
 
       - name: Download artifacts
@@ -56,7 +56,7 @@ jobs:
         working-directory: target
 
       - name: Copy downloaded artifact to . for Dockerfile compatibility
-        run: cp ./target/actions-demo-linux .
+        run: cp ./target/actions-demo .
 
       # Define job to build and publish container image
    
