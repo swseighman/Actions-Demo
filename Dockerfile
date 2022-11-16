@@ -1,11 +1,11 @@
 FROM container-registry.oracle.com/os/oraclelinux:9-slim
 # FROM docker.io/library/ubuntu:latest
 
-WORKDIR target
+WORKDIR downloads
 
 EXPOSE 8080
 
-COPY target/actions-demo app
+COPY downloads/actions-demo app
 ENTRYPOINT ["/app"]
 
 # Build and run:
