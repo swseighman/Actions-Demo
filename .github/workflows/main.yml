@@ -58,10 +58,6 @@ jobs:
       - name: Copy downloaded artifact to . for Dockerfile compatibility
         run: cp ./releases/target/actions-demo .
 
-       - name: Debug downloads
-        run: pwd; ls -lh
-        working-directory: ./
-
       # Define job to build and publish container image
    
       - name: Build and Publish a Container
