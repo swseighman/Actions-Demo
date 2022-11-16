@@ -48,15 +48,15 @@ jobs:
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
-        with:
-          path: releases
+        # with:
+        #   path: releases
       
       - name: Debug downloads
         run: pwd; ls -lh
         # working-directory: target
 
       - name: Copy downloaded artifact to . for Dockerfile compatibility
-        run: cp ./releases/target/actions-demo .
+        run: cp ./target/actions-demo .
 
       # Define job to build and publish container image
    
