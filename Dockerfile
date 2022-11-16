@@ -1,6 +1,8 @@
 FROM container-registry.oracle.com/os/oraclelinux:9-slim
 # FROM docker.io/library/ubuntu:latest
 
+WORKDIR target
+
 EXPOSE 8080
 
 COPY actions-demo app
