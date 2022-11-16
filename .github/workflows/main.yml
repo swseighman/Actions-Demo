@@ -38,12 +38,23 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build Native Image Using Maven
         run: mvn -Pnative native:compile
-      
+
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
           name: actions-demo-${{ matrix.os }}
           path: target/actions-demo
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: target
+      
+      - name: Debug downloads
+        run: pwd; ls -R
+
+      - name: Copy downloaded artifacts to . for Dockerfile compatibility
+        run: cp -av ./target/* ./
 
       # Define job to build and publish container image
    
