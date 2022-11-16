@@ -5,7 +5,7 @@ WORKDIR target
 
 EXPOSE 8080
 
-COPY actions-demo app
+COPY target/actions-demo app
 ENTRYPOINT ["/app"]
 
 # Build and run:
