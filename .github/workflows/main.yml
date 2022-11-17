@@ -40,26 +40,26 @@ jobs:
       - name: Build Native Image Using Maven
         run: mvn -Pnative native:compile
 
-      - name: Create a temporary artifact downloads folder
-        run: mkdir downloads
+      # - name: Create a temporary artifact downloads folder
+      #   run: mkdir downloads
         
-      - name: Add artifacts to publish to the temp folder
-        run: |
-          cp target/actions-demo downloads
+      # - name: Add artifacts to publish to the temp folder
+      #   run: |
+      #     cp target/actions-demo downloads
 
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
-          path: downloads
+          path: target/actions-demo
 
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v3
         # with:
         #   path: releases
       
-      - name: Debug downloads
-        run: pwd; ls -lh
-        working-directory: downloads
+      # - name: Debug downloads
+      #   run: pwd; ls -lh
+      #   working-directory: downloads
 
       # - name: Copy downloaded artifact to . for Dockerfile compatibility
       #   run: cp ./target/actions-demo .

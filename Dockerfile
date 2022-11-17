@@ -1,9 +1,11 @@
-FROM container-registry.oracle.com/os/oraclelinux:9-slim
-# FROM docker.io/library/ubuntu:latest
+# FROM container-registry.oracle.com/os/oraclelinux:9-slim
+FROM ghcr.io/oracle/oraclelinux:9-slim
+# FROM debian:stable-slim AS build
+# FROM gcr.io/distroless/base-debian11
 
 EXPOSE 8080
 
-COPY actions-demo /app
+COPY target/actions-demo app
 
 ENTRYPOINT ["/app"]
 
