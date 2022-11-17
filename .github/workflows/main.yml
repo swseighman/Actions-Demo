@@ -30,39 +30,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-job-reports: 'true'
       
-      # - name: Cache Maven packages
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ~/.m2
-      #     key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-      #     restore-keys: ${{ runner.os }}-m2
-      
       - name: Build Native Image Using Maven
         run: mvn -Pnative native:compile
-
-      # - name: Create a temporary artifact downloads folder
-      #   run: mkdir downloads
-        
-      # - name: Add artifacts to publish to the temp folder
-      #   run: |
-      #     cp target/actions-demo downloads
 
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
           path: target/actions-demo
-
-      # - name: Download artifacts
-      #   uses: actions/download-artifact@v3
-        # with:
-        #   path: releases
-      
-      # - name: Debug downloads
-      #   run: pwd; ls -lh
-      #   working-directory: downloads
-
-      # - name: Copy downloaded artifact to . for Dockerfile compatibility
-      #   run: cp ./target/actions-demo .
 
       # Define job to build and publish container image
    
