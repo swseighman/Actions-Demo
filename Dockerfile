@@ -1,12 +1,8 @@
 FROM container-registry.oracle.com/os/oraclelinux:9-slim
 # FROM docker.io/library/ubuntu:latest
 
-WORKDIR downloads
-
 EXPOSE 8080
 
-COPY actions-demo.zip /actions-demo.zip
-RUN unzip actions-demo.zip
 COPY actions-demo /app
 
 ENTRYPOINT ["/app"]
