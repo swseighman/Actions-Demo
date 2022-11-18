@@ -41,7 +41,7 @@ jobs:
       # Define job to build and publish container image
    
       - name: Build and Publish a Container
-        uses: actions/checkout@v3
+        # uses: actions/checkout@v3
 
       # Setup Container build action
       - name: Set up Container Buildx
