@@ -36,6 +36,6 @@ jobs:
       - name: Tag and push a container image
         id: tag-and-push-image
         run: |
-          docker pull oraclelinux:9-slim
-          docker tag "oraclelinux:9-slim" "${{ steps.get-ocir-repository.outputs.repo_path }}:9-slim"
-          docker push "${{ steps.get-ocir-repository.outputs.repo_path }}:9-slim"
+          docker build -t actions-demo:native .
+          docker tag "actions-demo:native" "${{ steps.get-ocir-repository.outputs.repo_path }}:native"
+          docker push "${{ steps.get-ocir-repository.outputs.repo_path }}:native"
