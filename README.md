@@ -22,7 +22,7 @@ The project will build without any changes, but if you make some changes to the 
 >3. on:
 >4.   push:
 >5.   # Replace none with [ main ] to automatically trigger the action on push
->6.     branches: [main]
+>6.     branches: [ main ]
 >7.   pull_request:
 >8.     branches: none
 >9.   # Allows you to run this workflow manually from the Actions tab
@@ -83,7 +83,7 @@ In addition, with the `native-image-job-reports: 'true'` configuration parameter
 
 Based on the configuration in the `main.yml` file, you can either push the image to GitHub or OCIR.  You'll need to comment/uncomment the appropriate section in the `main.yml`, labeled `Login to GitHub` or `Login to Oracle Container Registry`.
 
-By default, the job is configured for OCIR so you'll need to add OCI secrets to the project settings, including:
+By default, the job is configured for **GitHub**.  To configure the job for OCIR, you'll need to add OCI secrets to the project settings, including:
 
 ```
 OCI_CLI_USER
@@ -96,14 +96,6 @@ OCI_AUTH_TOKEN
 ```
 
 More info on the OCI environment variables can be found [here](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/clienvironmentvariables.htm).
-
-To use the GitHub repository (in addition to the Login lines), uncomment lines 12-14 in `main.yml`:
-
-```
-env:
-  REGISTRY: ghcr.io   # Uncomment if you're pushing to GitHub
-  IMAGE_NAME: ${{ github.repository }}  # Uncomment if you're pushing to GitHub
-```
 
 If you push to your GitHub repository, you can access the container image by clicking on the `Packages` link on the main project page:
 
