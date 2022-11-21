@@ -1,4 +1,4 @@
-name: GraalVM Native Image Builds
+name: GraalVM Native Image Build and Push to Registry
 
 on:
   push:
