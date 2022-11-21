@@ -2,14 +2,14 @@ name: GraalVM Native Image Build and Push to Registry
 
 on:
   push:
-  # Remove none and add [ main ] to automatically trigger the action on push
-    branches: none
+  # Remove [ main ] and add none to automatically trigger the action on push
+    branches: [main]
   pull_request:
     branches: none
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
+#env:
   # REGISTRY: ghcr.io   # Uncomment if you're pushing to GitHub
   # IMAGE_NAME: ${{ github.repository }}  # Uncomment if you're pushing to GitHub
   
