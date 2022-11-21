@@ -3,22 +3,22 @@ name: GraalVM Native Image Build and Push to Registry
 on:
   push:
   # Remove [ main ] and add none to automatically trigger the action on push
-    branches: [main]
+    branches: [ main ]
   pull_request:
     branches: none
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-#env:
-  # REGISTRY: ghcr.io   # Uncomment if you're pushing to GitHub
-  # IMAGE_NAME: ${{ github.repository }}  # Uncomment if you're pushing to GitHub
+env:
+  REGISTRY: ghcr.io   # Uncomment if you're pushing to GitHub
+  IMAGE_NAME: ${{ github.repository }}  # Uncomment if you're pushing to GitHub
   
   # The repository secrets below need to be defined in Settings-Secrets-Actions
-  OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
-  OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
-  OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
-  OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
-  OCI_CLI_REGION: ${{ secrets.OCI_CLI_REGION }}
+  # OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
+  # OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
+  # OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
+  # OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
+  # OCI_CLI_REGION: ${{ secrets.OCI_CLI_REGION }}
 
 jobs:
   build:
@@ -51,47 +51,47 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v2
 
-      # Login to Oracle Container Registry
-      # Comment out if you're pushing to GitHub
-      - name: Get or create an OCIR Repository
-        uses: oracle-actions/get-ocir-repository@v1.1
-        id: get-ocir-repository
-        with:
-          name: actions-demo
-          compartment: ${{ secrets.OCI_COMPARTMENT_OCID }}
-
-      - name: Log into OCIR
-        uses: oracle-actions/login-ocir@v1.1
-        id: login-ocir
-        with:
-          auth_token: ${{ secrets.OCI_AUTH_TOKEN }}
-      
-      - name: Tag and push a container image
-        id: tag-and-push-image
-        run: |
-          docker build -t actions-demo:native .
-          docker tag "actions-demo:native" "${{ steps.get-ocir-repository.outputs.repo_path }}:native"
-          docker push "${{ steps.get-ocir-repository.outputs.repo_path }}:native"
-
       # Login to GitHub Registry
       # Comment out if you're pushing to OCIR
-      # - name: Login to Github Packages
-      #   uses: docker/login-action@v2
-      #   with:
-      #     registry: ${{ env.REGISTRY }}
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to Github Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       
-      # - name: Build image and push to GitHub Container Registry
-      #   uses: docker/build-push-action@v3
+      - name: Build image and push to GitHub Container Registry
+        uses: docker/build-push-action@v3
+        with:
+          # Relative path to the place where source code with Dockerfile is located
+          context: ./
+          # Note: tags has to be all lower-case
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          # build on feature branches, push only on main branch
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+      # Login to Oracle Container Registry
+      # Comment out if you're pushing to GitHub
+      # - name: Get or create an OCIR Repository
+      #   uses: oracle-actions/get-ocir-repository@v1.1
+      #   id: get-ocir-repository
       #   with:
-      #     # Relative path to the place where source code with Dockerfile is located
-      #     context: ./
-      #     # Note: tags has to be all lower-case
-      #     tags: |
-      #       ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-      #     # build on feature branches, push only on main branch
-      #     push: ${{ github.ref == 'refs/heads/main' }}
+      #     name: actions-demo
+      #     compartment: ${{ secrets.OCI_COMPARTMENT_OCID }}
+
+      # - name: Log into OCIR
+      #   uses: oracle-actions/login-ocir@v1.1
+      #   id: login-ocir
+      #   with:
+      #     auth_token: ${{ secrets.OCI_AUTH_TOKEN }}
+      
+      # - name: Tag and push a container image
+      #   id: tag-and-push-image
+      #   run: |
+      #     docker build -t actions-demo:native .
+      #     docker tag "actions-demo:native" "${{ steps.get-ocir-repository.outputs.repo_path }}:native"
+      #     docker push "${{ steps.get-ocir-repository.outputs.repo_path }}:native"
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
